@@ -1,0 +1,86 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.left{
+    width: 300px;
+    float: left;
+}
+.form-container{
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.form{
+    margin-top: 20px;
+    margin-left: 20px;
+    /* margin-right: 15px; */
+}
+
+input {
+    width: 250px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    height: 40px;
+}
+input:focus{
+    border: 2px solid red;
+    outline: none;
+    border-radius: 5px;
+}
+label{
+    color: #000;
+    font-weight: bold;
+}
+.form div{
+    margin-bottom: 30px;
+}
+.age input::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+}
+
+.Class{
+    float: left;
+    width: 50%;
+}
+.Class input::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+}
+.division input{
+    width: 115px;
+}
+.Class input{
+    width: 115px;
+}
+.submit-btn{
+    padding: 2px 6px;
+    margin-bottom: 70px;
+    background: #4975f0;
+    color: #fff;
+    outline: none;
+    border-radius: 5px;
+}
+
+
+
+/* ---------------------for database---------------------- */
+.right{
+    margin-left: 10px;
+    float: left;
+}
+.database{
+    padding: 10px;
+    margin-top: 20px;
+    text-align: center;
+    
+}
+.database thead tr th{
+    padding: 0 35px;
+    width: auto;
+}
+#update{
+    display: none;
+}

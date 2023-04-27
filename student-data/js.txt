@@ -1,0 +1,206 @@
+function validation(){
+    var name=document.myform.uname.value;
+    var dob=document.myform.birth.value;
+    var age=document.myform.age.value;
+    var add_class=document.myform.class.value;
+    var division=document.myform.division.value;
+    var registration=document.myform.reg.value;
+    var Email=document.myform.email.value;
+   
+}
+
+// -------for convert lower case to upper case------
+
+function upperCaseF(a){
+    setTimeout(function(){
+        a.value = a.value.toUpperCase();
+    })
+}
+
+//---- for previous date only---
+
+today=new Date();
+dd=today.getDate();
+mm=today.getMonth()+1;
+yyyy=today.getFullYear();
+
+if(dd < 10){
+    dd = '0' + dd;
+}
+
+if(mm < 10){
+    mm = '0' + mm;
+}
+
+today = yyyy + '-' + mm + '-' + dd;
+document.getElementById("dob").setAttribute('max', today);
+
+// -----change the input border color if input field is filled
+
+function checkFilled(){
+    fill = document.getElementsByClassName("filled");
+    for(i=0; i<fill.length; i++)
+    {
+        if(fill[i].value == ''){
+            fill[i].style.border = "2px solid red";
+        }
+        else
+        {
+            fill[i].style.border = "2px solid green";
+        }
+    }
+}
+
+// --------enable button----
+
+ d=document, [inputs, btnEnable] = [
+     d.querySelectorAll('input'),
+     d.querySelector('#btn')
+ ]
+ btnEnable.disabled = true;
+
+ for(i=0; i<inputs.length; i++)
+ {
+     inputs[i].addEventListener('input', () =>{
+         values = []
+         inputs.forEach(v => values.push(v.value))
+         btnEnable.disabled = values.includes('')
+     })
+ }
+ 
+
+// -----crud----
+
+function showData(){
+    var peopleList;
+    if(localStorage.getItem("peopleList")== null){
+        peopleList = [];
+    }
+    else
+    {
+        peopleList = JSON.parse(localStorage.getItem("peopleList"));
+    }
+
+    var html = "";
+    peopleList.forEach(function (element, index){
+        
+        html += "<tr>";
+        html += "<td>"+ element.name + "</td>";
+        html += "<td>"+ element.dob + "</td>";
+        html += "<td>"+ element.age + "</td>";
+        html += "<td>"+ element.add_class +" "+ element.division + "</td>";
+        html += "<td>"+ element.registration + "</td>";
+        html += "<td>"+ element.Email + "</td>";
+        html += `<td><button onclick="deleteData('+index+')" class="btn btn-danger">delete</button>
+                  <button onclick="updateData('+index+')" class="btn btn-warning">edit</button></td>`;
+        html += "</tr>";
+
+    });
+
+    document.querySelector("#crudList tbody").innerHTML = html;
+    
+}
+
+document.onload = showData();
+
+function AddData(){
+    
+    var name=document.getElementById("name").value;
+    var dob=document.getElementById("dob").value;
+    var age=document.getElementById("age").value;
+    var cls=document.getElementById("cls").value;
+    var divi=document.getElementById("divi").value;
+    var reg=document.getElementById("reg").value;
+    var email=document.getElementById("email").value;
+
+
+    var peopleList;
+    if(localStorage.getItem("peopleList")== null){
+        peopleList = [];
+    }
+    else
+    {
+        peopleList = JSON.parse(localStorage.getItem("peopleList"));
+    }
+
+    peopleList.push({
+        name : name,
+        dob : dob,
+        age : age,
+        add_class : cls,
+        division : divi,
+        registration : reg,
+        Email : email,
+    });
+
+    localStorage.setItem("peopleList", JSON.stringify(peopleList));
+    showData();
+    document.getElementById("name").value = "";
+    document.getElementById("age").value = "";
+    document.getElementById("dob").value = "";
+    document.getElementById("cls").value = "";
+    document.getElementById("divi").value = "";
+    document.getElementById("reg").value = "";
+    document.getElementById("email").value = "";
+}
+
+function deleteData(index){
+    var peopleList;
+    if(localStorage.getItem("peopleList")== null){
+        peopleList = [];
+    }
+    else
+    {
+        peopleList = JSON.parse(localStorage.getItem("peopleList"));
+    }
+
+    peopleList.splice(index, 1);
+    localStorage.setItem("peopleList", JSON.stringify(peopleList));
+    showData();
+}
+
+function updateData(index){
+    document.getElementById("submit").style.display = "none";
+    document.getElementById("update").style.display = "block";
+
+    var peopleList;
+    if(localStorage.getItem("peopleList")== null){
+        peopleList = [];
+    }
+    else
+    {
+        peopleList = JSON.parse(localStorage.getItem("peopleList"));
+    }
+
+    document.getElementById("name").value = peopleList[index].name;
+    document.getElementById("age").value = peopleList[index].age;
+    document.getElementById("dob").value = peopleList[index].dob;
+    document.getElementById("cls").value = peopleList[index].cls;
+    document.getElementById("divi").value = peopleList[index].divi;
+    document.getElementById("reg").value = peopleList[index].reg;
+    document.getElementById("email").value = peopleList[index].email;
+
+     document.querySelector("#update").onclick=function(){
+        peopleList[index].name = document.getElementById("name").value
+        peopleList[index].age = document.getElementById("age").value
+        peopleList[index].dob = document.getElementById("dob").value
+        peopleList[index].cls = document.getElementById("cls").value
+        peopleList[index].divi = document.getElementById("divi").value
+        peopleList[index].reg = document.getElementById("reg").value
+        peopleList[index].email = document.getElementById("email").value
+
+        localStorage.setItem("peopleList", JSON.stringify(peopleList));
+        showData();
+
+        document.getElementById("name").value = "";
+        document.getElementById("age").value = "";
+        document.getElementById("dob").value = "";
+        document.getElementById("cls").value = "";
+        document.getElementById("divi").value = "";
+        document.getElementById("reg").value = "";
+        document.getElementById("email").value = "";
+
+        document.getElementById("submit").style.display = "block";
+        document.getElementById("update").style.display = "none";
+     }
+}
